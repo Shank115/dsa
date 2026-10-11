@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <main class="container">
+    <h1>DSA Visualizer</h1>
+    <p class="subtitle">
+      Learn sorting algorithms by watching them work.
+    </p>
+
+    <div class="controls">
+      <button id="generateBtn">Generate Array</button>
+      <button id="sortBtn">Start Bubble Sort</button>
+      <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span>Array Size</span>
+        <strong id="size">30</strong>
+      </div>
+      <div class="stat">
+        <span>Comparisons</span>
+        <strong id="comparisons">0</strong>
+      </div>
+      <div class="stat">
+        <span>Swaps</span>
+        <strong id="swaps">0</strong>
+      </div>
+    </div>
+
+    <div id="bars" aria-label="Array visualization"></div>
+
+    <div class="legend">
+      <span><i class="dot" style="background:#38bdf8"></i>Unsorted</span>
+      <span><i class="dot" style="background:#facc15"></i>Comparing</span>
+      <span><i class="dot" style="background:#fb7185"></i>Swapping</span>
+      <span><i class="dot" style="background:#4ade80"></i>Sorted</span>
+    </div>
+
+    <p id="status" role="status">Generate an array and start sorting.</p>
+
+    <section>
+      <h2>About Bubble Sort</h2>
+      <p>Time complexity: O(n²) average and worst case</p>
+      <p>Best-case time: O(n), with an early-stop optimization</p>
+      <p>Auxiliary space: O(1), excluding visualization data</p>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
