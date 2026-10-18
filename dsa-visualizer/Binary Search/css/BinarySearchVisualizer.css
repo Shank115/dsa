@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px 16px;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #38bdf8;
+}
+
+.description {
+  text-align: center;
+  color: #94a3b8;
+}
+
+.panel {
+  background: #1e293b;
+  padding: 22px;
+  margin: 20px 0;
+  border-radius: 14px;
+}
+
+input {
+  padding: 12px;
+  margin: 6px 4px 6px 0;
+  width: min(100%, 320px);
+  border: 1px solid #475569;
+  border-radius: 7px;
+  background: #0f172a;
+  color: white;
+}
+
+button {
+  padding: 11px 16px;
+  margin: 5px 3px 5px 0;
+  border: none;
+  border-radius: 7px;
+  background: #0284c7;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#array {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.cell {
+  width: 75px;
+  min-height: 85px;
+  border: 2px solid #475569;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #334155;
+  transition: 0.25s;
+}
+
+.cell strong {
+  font-size: 22px;
+}
+
+.cell small {
+  color: #cbd5e1;
+}
+
+.cell.outside {
+  opacity: 0.3;
+}
+
+.cell.middle {
+  background: #1d4ed8;
+  border-color: #60a5fa;
+}
+
+.cell.found {
+  background: #15803d;
+  border-color: #4ade80;
+}
+
+#message {
+  min-height: 48px;
+  line-height: 1.6;
+  color: #bae6fd;
+}
+
+.legend {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 2;
+}
+
+pre {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #cbd5e1;
+}
+
+.active-line {
+  color: #facc15;
+  font-weight: bold;
+}
