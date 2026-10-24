@@ -7,6 +7,12 @@ const status = document.getElementById("status");
 const generateBtn = document.getElementById("generateBtn");
 const sortBtn = document.getElementById("sortBtn");
 const resetBtn = document.getElementById("resetBtn");
+const sizeInput = document.getElementById("sizeInput");
+const customInput = document.getElementById("customInput");
+const customBtn = document.getElementById("customBtn");
+
+const MIN_SIZE = 5;
+const MAX_SIZE = 100;
 
 let array = [];
 let isSorting = false;
@@ -16,8 +22,13 @@ let swaps = 0;
 function generateArray() {
   if (isSorting) return;
 
+  let size = parseInt(sizeInput.value, 10);
+  if (Number.isNaN(size)) size = 30;
+  size = Math.min(MAX_SIZE, Math.max(MIN_SIZE, size));
+  sizeInput.value = size;
+
   array = Array.from(
-    { length: 30 },
+    { length: size },
     () => Math.floor(Math.random() * 95) + 5
   );
 
@@ -29,13 +40,47 @@ function generateArray() {
   status.textContent = "New array generated. Ready to sort.";
 }
 
+function useCustomArray() {
+  if (isSorting) return;
+
+  const parts = customInput.value
+    .split(/[,\s]+/)
+    .map(part => part.trim())
+    .filter(Boolean);
+
+  const values = parts.map(Number);
+
+  if (values.length < 2 || values.some(Number.isNaN)) {
+    status.textContent =
+      "Invalid input. Enter at least two numbers separated by commas, e.g. 5, 42, 17, 8, 23";
+    return;
+  }
+
+  if (values.length > MAX_SIZE) {
+    status.textContent = `Please enter at most ${MAX_SIZE} numbers.`;
+    return;
+  }
+
+  array = values;
+  comparisons = 0;
+  swaps = 0;
+  sizeInput.value = array.length;
+
+  renderBars();
+  updateStats();
+  status.textContent = "Custom array loaded. Ready to sort.";
+}
+
 function renderBars(active = [], swapping = [], sorted = []) {
   bars.innerHTML = "";
+
+  const maxMagnitude = Math.max(...array.map(value => Math.abs(value)), 1);
 
   array.forEach((value, index) => {
     const bar = document.createElement("div");
     bar.className = "bar";
-    bar.style.height = `${value}%`;
+    const heightPercent = Math.max(4, (Math.abs(value) / maxMagnitude) * 100);
+    bar.style.height = `${heightPercent}%`;
     bar.title = String(value);
 
     if (sorted.includes(index)) {
@@ -123,6 +168,9 @@ function setControlsDisabled(disabled) {
   generateBtn.disabled = disabled;
   sortBtn.disabled = disabled;
   resetBtn.disabled = disabled;
+  sizeInput.disabled = disabled;
+  customInput.disabled = disabled;
+  customBtn.disabled = disabled;
 }
 
 function resetArray() {
@@ -138,5 +186,9 @@ function resetArray() {
 generateBtn.addEventListener("click", generateArray);
 sortBtn.addEventListener("click", bubbleSort);
 resetBtn.addEventListener("click", resetArray);
+customBtn.addEventListener("click", useCustomArray);
+customInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") useCustomArray();
+});
 
 generateArray();

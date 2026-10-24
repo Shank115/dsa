@@ -53,6 +53,43 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.field.grow {
+  flex: 1;
+  min-width: 220px;
+}
+
+.field input {
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.field input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#sizeInput {
+  width: 70px;
+}
+
+.field.grow input {
+  width: 100%;
+}
+
 .stats {
   display: flex;
   flex-wrap: wrap;

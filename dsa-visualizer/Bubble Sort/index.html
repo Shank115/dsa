@@ -16,9 +16,25 @@
     </p>
 
     <div class="controls">
+      <label class="field">
+        Size
+        <input type="number" id="sizeInput" min="5" max="100" value="30" />
+      </label>
       <button id="generateBtn">Generate Array</button>
       <button id="sortBtn">Start Bubble Sort</button>
       <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <div class="controls">
+      <label class="field grow">
+        Custom Array
+        <input
+          type="text"
+          id="customInput"
+          placeholder="e.g. 5, 42, 17, 8, 23"
+        />
+      </label>
+      <button id="customBtn" class="secondary">Use Custom Array</button>
     </div>
 
     <div class="stats">
