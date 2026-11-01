@@ -1,0 +1,271 @@
+{
+ "totals": {
+  "visits": 24,
+  "qr_scans": 15,
+  "unique_visitors": 6,
+  "snap_clicks": 2,
+  "game_starts": 10,
+  "games_finished": 5,
+  "shares": 13,
+  "meme_opens": 7,
+  "memes_viewed": 17,
+  "meme_likes": 0,
+  "meme_shares": 1
+ },
+ "best_score": 51,
+ "daily": {
+  "2026-10-24": {
+   "visits": 4,
+   "qr_scans": 3,
+   "new_visitors": 2,
+   "snap_clicks": 2,
+   "games": 5
+  },
+  "2026-10-25": {
+   "visits": 20,
+   "qr_scans": 12,
+   "new_visitors": 4,
+   "snap_clicks": 0,
+   "games": 5
+  }
+ },
+ "visitors": {
+  "ngv2umpeoymvmodmyl": "2026-10-24T23:11:27",
+  "l4qs9ppsnrmvmoh3eu": "2026-10-24T23:21:06",
+  "9cd451a4-44b7-4f28-9a12-a893430cd62c": "2026-10-25T11:59:49",
+  "58tixt6zpfumvnli6iu": "2026-10-25T14:28:22",
+  "4j9rvhhw2famvnljve0": "2026-10-25T14:29:41",
+  "883b49b5-707b-4ea3-a4d6-a131b35adbf8": "2026-10-25T14:43:41"
+ },
+ "recent": [
+  {
+   "t": "2026-10-25T14:49:00",
+   "event": "game_start",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T14:46:28",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T14:43:41",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T14:43:27",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T14:30:14",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:29:41",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:28:33",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:28:22",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:26:32",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:24:43",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T14:11:01",
+   "event": "game_start",
+   "device": "iPhone"
+  },
+  {
+   "t": "2026-10-25T14:10:25",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:08:50",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:07:09",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:06:17",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T14:05:56",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T14:03:11",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T13:58:45",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T13:57:24",
+   "event": "visit",
+   "device": "Windows",
+   "src": "direct"
+  },
+  {
+   "t": "2026-10-25T13:54:38",
+   "event": "game_start",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:50:40",
+   "event": "visit",
+   "device": "iPhone",
+   "src": "qr"
+  },
+  {
+   "t": "2026-10-25T13:41:25",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 1
+  },
+  {
+   "t": "2026-10-25T13:41:24",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:39:29",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 1
+  },
+  {
+   "t": "2026-10-25T13:39:12",
+   "event": "meme_share",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:39:11",
+   "event": "meme_like",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:39:06",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:39:02",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 1
+  },
+  {
+   "t": "2026-10-25T13:39:00",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:38:17",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 5
+  },
+  {
+   "t": "2026-10-25T13:38:12",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:18:25",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 5
+  },
+  {
+   "t": "2026-10-25T13:18:18",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:15:04",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 1
+  },
+  {
+   "t": "2026-10-25T13:15:02",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T13:14:55",
+   "event": "meme_session",
+   "device": "Windows",
+   "count": 3
+  },
+  {
+   "t": "2026-10-25T13:14:43",
+   "event": "meme_open",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T12:09:42",
+   "event": "game_start",
+   "device": "Windows"
+  },
+  {
+   "t": "2026-10-25T12:02:35",
+   "event": "game_over",
+   "device": "Windows",
+   "score": 4
+  },
+  {
+   "t": "2026-10-25T12:02:27",
+   "event": "game_start",
+   "device": "Windows"
+  }
+ ],
+ "meme_likes": {
+  "0e85768e4441": 0
+ }
+}

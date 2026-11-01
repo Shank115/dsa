@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Scan Stats</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Unbounded:wght@300..900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #0b0a12; --card: #15131f; --stroke: #262335; --text: #f6f4ff; --muted: #9a96ad; --accent: #ec4899; --snap: #fffc00; }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: var(--bg); color: var(--text); font-family: "Bricolage Grotesque", system-ui, sans-serif; padding: max(20px, env(safe-area-inset-top)) 16px 40px; }
+    .wrap { max-width: 860px; margin: 0 auto; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    h1 { font-size: 26px; font-weight: 800; }
+    .live { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 #22c55e88; animation: ping 2s infinite; }
+    .dot.err { background: #ef4444; animation: none; }
+    @keyframes ping { 70% { box-shadow: 0 0 0 8px transparent; } }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .tile { background: var(--card); border: 1px solid var(--stroke); border-radius: 18px; padding: 16px; }
+    .tile .k { color: var(--muted); font-size: 13px; font-weight: 500; }
+    .tile .v { font-size: 34px; font-weight: 800; margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .tile.hero { background: linear-gradient(135deg, #7c3aed, #ec4899); border: 0; }
+    .tile.hero .k { color: #ffffffcc; }
+    h2 { font-size: 16px; font-weight: 700; margin: 28px 0 12px; }
+    .panel { background: var(--card); border: 1px solid var(--stroke); border-radius: 18px; padding: 6px 16px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+    th { text-align: right; color: var(--muted); font-weight: 500; padding: 10px 6px; white-space: nowrap; }
+    td { text-align: right; padding: 9px 6px; border-top: 1px solid var(--stroke); white-space: nowrap; }
+    th:first-child, td:first-child { text-align: left; }
+    .bar { display: inline-block; height: 8px; border-radius: 4px; background: var(--accent); vertical-align: middle; margin-right: 8px; }
+    .feed { list-style: none; padding: 0; }
+    .feed li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--stroke); font-size: 14px; }
+    .feed li:first-child { border-top: 0; }
+    .feed .when { color: var(--muted); white-space: nowrap; }
+    .empty { color: var(--muted); padding: 14px 0; }
+    .msgs li { flex-direction: column; gap: 4px; }
+    .msgs .text { white-space: pre-wrap; word-break: break-word; font-size: 15px; }
+    .memes { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; padding: 12px 0; }
+    .memes figure { margin: 0; position: relative; }
+    .memes img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 12px; background: #fff; display: block; }
+    .memes figcaption { position: absolute; left: 6px; bottom: 6px; padding: 3px 8px; border-radius: 999px; background: #000c; font-size: 13px; font-weight: 700; }
+    .err-msg { background: #3b1219; border: 1px solid #7f1d1d; padding: 12px 14px; border-radius: 12px; margin-bottom: 16px; }
+    h1, .tile .v { font-family: "Unbounded", system-ui, sans-serif; font-weight: 400; }
+    .tile .v { font-size: 28px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Scan Stats</h1>
+      <span class="live"><span id="dot" class="dot"></span><span id="updated">Loading…</span></span>
+    </header>
+    <div id="err" class="err-msg" hidden>Can't reach the server. Start it with <b>python server.py</b>.</div>
+
+    <div class="tiles">
+      <div class="tile"><div class="k">🟢 Vibing rn</div><div class="v" id="online">–</div></div>
+      <div class="tile hero"><div class="k">QR scans</div><div class="v" id="qr_scans">–</div></div>
+      <div class="tile"><div class="k">Total visits</div><div class="v" id="visits">–</div></div>
+      <div class="tile"><div class="k">Unique visitors</div><div class="v" id="unique_visitors">–</div></div>
+      <div class="tile"><div class="k">Snapchat taps</div><div class="v" id="snap_clicks">–</div></div>
+      <div class="tile"><div class="k">Games played</div><div class="v" id="game_starts">–</div></div>
+      <div class="tile"><div class="k">Top score</div><div class="v" id="best_score">–</div></div>
+      <div class="tile"><div class="k">Anonymous messages</div><div class="v" id="messages_count">–</div></div>
+      <div class="tile"><div class="k">😂 Meme scrolls</div><div class="v" id="meme_opens">–</div></div>
+      <div class="tile"><div class="k">Memes viewed</div><div class="v" id="memes_viewed">–</div></div>
+      <div class="tile"><div class="k">Meme likes</div><div class="v" id="meme_likes">–</div></div>
+    </div>
+
+    <h2>Last 14 days</h2>
+    <div class="panel">
+      <table>
+        <thead><tr><th>Day</th><th>Visits</th><th>QR scans</th><th>New visitors</th><th>Snap taps</th><th>Games</th></tr></thead>
+        <tbody id="days"></tbody>
+      </table>
+    </div>
+
+    <h2>Anonymous messages 🤫</h2>
+    <div class="panel"><ul class="feed msgs" id="msgs"></ul></div>
+
+    <h2>Top memes 😂</h2>
+    <div class="panel"><div class="memes" id="topMemes"></div></div>
+
+    <h2>Leaderboard</h2>
+    <div class="panel"><ul class="feed" id="board"></ul></div>
+
+    <h2>Recent activity</h2>
+    <div class="panel"><ul class="feed" id="feed"></ul></div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const LABELS = {
+      visit: (e) => (e.src === "qr" ? "📷 Scanned the QR" : "🌐 Visited directly"),
+      snap_click: () => "👻 Tapped Add on Snapchat",
+      game_start: () => "🎮 Started a game",
+      game_over: (e) => `🧱 Finished a game: ${e.score}`,
+      share: () => "📤 Shared a challenge",
+      meme_open: () => "😂 Opened the meme scroll",
+      meme_session: (e) => `😂 Scrolled ${e.count} meme${e.count === 1 ? "" : "s"}`,
+      meme_like: () => "❤️ Liked a meme",
+      meme_share: () => "📤 Shared a meme",
+    };
+
+    function ago(iso) {
+      const s = Math.max(0, (Date.now() - new Date(iso)) / 1000);
+      if (s < 60) return "just now";
+      if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+      if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+      return new Date(iso).toLocaleDateString();
+    }
+
+    function render(s) {
+      for (const k of ["meme_opens", "memes_viewed", "meme_likes"]) $(k).textContent = 0;
+      for (const [k, v] of Object.entries(s.totals)) if ($(k)) $(k).textContent = v;
+      $("best_score").textContent = s.best_score;
+      $("messages_count").textContent = s.messages_count ?? 0;
+      $("online").textContent = s.online ?? 0;
+
+      const days = [];
+      for (let i = 0; i < 14; i++) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+        days.push([d, s.daily[key] || { visits: 0, qr_scans: 0, new_visitors: 0, snap_clicks: 0, games: 0 }]);
+      }
+      const max = Math.max(1, ...days.map(([, v]) => v.visits));
+      $("days").innerHTML = days.map(([d, v], i) => `
+        <tr>
+          <td>${i === 0 ? "Today" : d.toLocaleDateString(undefined, { day: "numeric", month: "short" })}</td>
+          <td><span class="bar" style="width:${Math.round((v.visits / max) * 40)}px"></span>${v.visits}</td>
+          <td>${v.qr_scans}</td><td>${v.new_visitors}</td><td>${v.snap_clicks}</td><td>${v.games}</td>
+        </tr>`).join("");
+
+      const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+      const topMemes = Object.entries(s.meme_likes || {}).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).slice(0, 12);
+      $("topMemes").innerHTML = topMemes.length
+        ? topMemes.map(([id, n]) => `<figure><img src="memes/${esc(id)}.webp" alt="" loading="lazy"><figcaption>❤️ ${n}</figcaption></figure>`).join("")
+        : '<p class="empty">No likes yet. Double-tap a meme to see it here.</p>';
+      const top = s.leaderboard ? s.leaderboard.top : [];
+      $("board").innerHTML = top.length
+        ? top.map((e, i) => `<li><span>#${i + 1} ${esc(e.name)}${e.owner ? " 👑" : ""}</span><b>${e.score}</b></li>`).join("")
+        : '<li class="empty">No scores saved yet.</li>';
+
+      $("feed").innerHTML = s.recent.length
+        ? s.recent.map((e) => `<li><span>${(LABELS[e.event] || (() => e.event))(e)} <small style="color:var(--muted)">· ${e.device}</small></span><span class="when">${ago(e.t)}</span></li>`).join("")
+        : '<li class="empty">No activity yet. Scan your QR to see it here.</li>';
+    }
+
+    async function refresh() {
+      try {
+        const res = await fetch("/api/stats", { cache: "no-store" });
+        if (!res.ok) throw new Error(res.status);
+        render(await res.json());
+        $("err").hidden = true;
+        $("dot").classList.remove("err");
+        $("updated").textContent = "Live · updated " + new Date().toLocaleTimeString();
+      } catch {
+        $("err").hidden = false;
+        $("dot").classList.add("err");
+        $("updated").textContent = "Offline";
+      }
+    }
+    // Messages are private: they need the owner key (from server.py's printed link).
+    const params = new URLSearchParams(location.search);
+    if (params.get("key")) {
+      localStorage.setItem("ownerKey", params.get("key"));
+      history.replaceState(null, "", location.pathname);
+    }
+    const ownerKey = localStorage.getItem("ownerKey") || "";
+
+    async function refreshMessages() {
+      const box = $("msgs");
+      if (!ownerKey) {
+        box.innerHTML = '<li class="empty">Open the stats link printed by <b>python server.py</b> (it has ?key=…) to read messages.</li>';
+        return;
+      }
+      try {
+        const res = await fetch(`/api/messages?key=${encodeURIComponent(ownerKey)}`, { cache: "no-store" });
+        if (res.status === 403) throw new Error("bad key");
+        const list = await res.json();
+        const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        box.innerHTML = list.length
+          ? list.map((m) => `<li><span class="text">${esc(m.text)}</span><span class="when">${ago(m.t)}</span></li>`).join("")
+          : '<li class="empty">No messages yet.</li>';
+      } catch {
+        box.innerHTML = '<li class="empty">This key is wrong. Use the stats link printed by server.py.</li>';
+      }
+    }
+
+    refresh();
+    refreshMessages();
+    setInterval(() => { refresh(); refreshMessages(); }, 5000);
+  </script>
+</body>
+</html>
