@@ -13,6 +13,8 @@ import unicodedata
 from datetime import datetime
 from functools import cache, partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import mimetypes
+mimetypes.add_type("font/woff2", ".woff2")  # Windows Python doesn't know it
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
@@ -330,7 +332,7 @@ class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         # Meme images never change (named by content), so phones can keep them for scrolling back
         # without signal. Everything else is always served fresh while testing.
-        immutable = self.path.startswith("/memes/") and self.path.endswith(".webp")
+        immutable = (self.path.startswith("/memes/") and self.path.endswith(".webp")) or self.path.startswith("/fonts/")
         self.send_header("Cache-Control", "public, max-age=31536000, immutable" if immutable else "no-store")
         super().end_headers()
 

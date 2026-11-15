@@ -2,7 +2,7 @@
 
 > Read this first when picking the project back up. It records **why** the site exists,
 > what's been decided (and rejected), and what's next. Keep it updated as things change.
-> Last updated: **25 Oct 2026**.
+> Last updated: **15 Nov 2026**.
 
 ## Why this exists
 - Shashank is going to the **Shreya Ghoshal concert on 22 Nov 2026** and will print a **QR code on a T-shirt**.
@@ -33,6 +33,7 @@ python make_memes.py  # after adding screenshots to meme/
 | Path | What |
 |---|---|
 | `site/index.html` | The page: profile, "Bored?" carousel (3 cards), anonymous messages, Connect, game screen, meme feed, modals (leaderboard, share, aura, emoji picker) |
+| `site/css/fonts.css` + `site/fonts/` | **Self-hosted** Space Grotesk + JetBrains Mono (latin, variable woff2 = all weights, 62 KB total). No Google Fonts. |
 | `site/css/style.css` | All styles, **appended in sections; later sections override earlier ones** (theme overrides are at the end) |
 | `site/js/config.js` | **Edit this** for name, Snapchat username, typing roles, message prompts |
 | `site/js/track.js` | Analytics client (`Track.send()` returns server reply, e.g. aura earned) + one-time phone data wipe (`DATA_VERSION`) |
@@ -138,6 +139,21 @@ python make_memes.py  # after adding screenshots to meme/
 - "How compatible are we?" quiz → story card; scratch card; rizz meter; Gen Z fortune; secret Barça mode (tap avatar 5×);
   red flag / green flag voting; 2 truths & a lie; visitor #N badge; vibe-check poll; song requests; travel map; daily challenge;
   game skins; Snapcode popup / Bitmoji avatar (`snapchat.png`).
+
+## Slow network (2G/3G) — TODO, remind him when he asks "what's next" / about speed
+Concert crowd = congested towers, so plan for 2G-like speeds. Goal: profile + Snap button visible in ~3 s on 2G.
+- ✅ **Done 15 Nov**: fonts self-hosted (`css/fonts.css`, `fonts/*.woff2`, cached 1 year by `server.py`); Google Fonts links
+  removed from `index.html` + `stats.html`. No font preload on purpose (it competed with CSS on 2G: 31 s → 27 s).
+- Measured locally (uncompressed Python server, Edge 390×844): **3G name visible 2.7 s**; **2G name visible ~27 s** —
+  page sends ~200 KB raw (JS 97 KB, CSS 44 KB, fonts 63 KB). Netlify gzip/brotli will cut JS+CSS to ~47 KB.
+- Still to do (he picked "later"):
+  2. 🎯 **Profile + Snap first**: `defer` scripts; load `knife.js` / `stack.js` / `music.js` only when the game is opened / first tap.
+  3. 🔁 **Fetch timeouts + "weak signal 📶, tap to retry"** for leaderboard, message send, aura (`AbortController`, ~8 s). Today they hang forever.
+  4. 🖼️ **Data-saver memes**: if `navigator.connection.effectiveType` is 2g/3g or `saveData`, use smaller memes (~400px, ~8 KB;
+     `make_memes.py` makes a second size) and preload 2 ahead instead of 5.
+  5. 📴 **Offline / service worker**: second visit opens instantly with no signal; queue messages/scores and send when back online.
+  6. 🗜️ **Minify CSS/JS** at deploy (small Python script), ~25% smaller.
+  7. 🧪 **Re-run the 2G/3G throttle test** after changes (CDP `Network.emulateNetworkConditions`: 2G = 50 kbps / 600 ms, 3G = 750 kbps / 100 ms).
 
 ## Next steps (before 22 Nov)
 1. **More memes**: he's adding screenshots to `meme/` → run `python make_memes.py` (avg ~21 KB each → 1000 memes ≈ 21 MB).
